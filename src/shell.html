@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101116">
+<title>Saber Studio — Energy effects editor</title>
+<style>/* BUNDLE_STYLE */</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="brand"><svg class="brandmark" viewBox="0 0 40 36" aria-hidden="true"><path fill="#92acff" d="M17 3h9L12 17H3z"/><path fill="#6386ff" d="M29 3h9L12 30H3z"/><path fill="#466bff" d="M26 21h9L23 33h-9z"/></svg><b>SABER</b><span>STUDIO</span></div>
+  <div class="project"><i data-icon="layers"></i><input id="project-name" aria-label="Composition name" value="Untitled composition" maxlength="48"></div>
+  <button id="export-open" class="primary"><i data-icon="export"></i>Export<i data-icon="chevron"></i></button>
+</header>
+<main>
+<div class="editor">
+  <section class="composition">
+    <div class="section-head"><h2><i data-icon="screen"></i>Composition</h2><span class="format">1920 × 1080 <span> / </span> 16:9</span></div>
+    <div class="viewport-wrap" id="full-view">
+      <div class="stage" id="stage">
+        <canvas id="preview" aria-label="Animated Saber effect preview"></canvas>
+        <div class="hud-status"><b></b><span id="live-label">LIVE</span></div>
+        <button id="guide-toggle" class="stage-tool" title="Toggle framing guides" aria-label="Toggle framing guides" aria-pressed="true"><i data-icon="frame"></i></button>
+        <div class="guides"><i></i><i></i><i></i><i></i></div>
+        <div class="stage-caption"><div id="preset-id">PRESET / 02</div><h1 id="active-name">Arc Reactor</h1></div>
+        <div id="point-layer"></div>
+        <div class="stage-error" hidden></div>
+      </div>
+      <div class="transport">
+       <button id="play" class="play" aria-label="Pause animation" title="Play or pause (Space)"><i data-icon="pause"></i></button>
+       <button id="restart" class="plain" aria-label="Restart animation" title="Restart"><i data-icon="restart"></i></button>
+       <output id="clock" for="timeline">00:00.00</output>
+       <input id="timeline" type="range" min="0" max="8" step=".01" value="0" aria-label="Animation playhead">
+       <span class="duration">08.00 s</span><span class="sep"></span>
+       <button id="fullscreen" class="plain" aria-label="Fullscreen preview" title="Fullscreen preview"><i data-icon="expand"></i></button>
+      </div>
+    </div>
+  </section>
+  <aside class="inspector">
+    <div class="section-head"><h2><i data-icon="sliders"></i>Effect controls</h2><button class="plain" id="reset" aria-label="Reset effect controls" title="Reset this preset"><i data-icon="reset"></i></button></div>
+    <div class="inspector-body">
+    <section class="group"><h3>Core</h3>
+      <label class="field-label" id="shape-label">Shape</label>
+      <div class="segments" role="group" aria-labelledby="shape-label" id="shapes"></div>
+      <div id="text-row" hidden><label class="sr-only" for="text-input">Core text</label><input id="text-input" maxlength="28" value="SABER"></div>
+      <div id="geometry-row"><button class="edit-geo" id="edit-geo"><i data-icon="move"></i><span>Edit geometry</span></button></div>
+      <div class="color-row"><label for="color">Core color</label><label class="color-field"><span id="hex">#297DFF</span><input id="color" type="color" value="#297dff"></label></div>
+      <div id="width-control"></div>
+    </section>
+    <section class="group"><h3>Glow</h3><div id="intensity-control"></div><div id="spread-control"></div></section>
+    <section class="group"><h3>Motion</h3><div id="distortion-control"></div><div id="speed-control"></div></section>
+    </div>
+  </aside>
+</div>
+<section class="library">
+ <div class="library-head"><div class="library-title"><i data-icon="grid"></i><h2>Preset library</h2><span class="count">51</span></div><button id="browse" class="secondary">Browse all<i data-icon="arrow"></i></button></div>
+ <div class="cards" id="featured"></div>
+</section>
+</main>
+<dialog id="library-dialog">
+  <div class="dialog-head"><div><span class="eyebrow">SABER STUDIO</span><h2>Preset library <span class="count">51</span></h2></div><button class="plain close" aria-label="Close library"><i data-icon="x"></i></button></div>
+  <div class="search-row"><label class="search"><i data-icon="search"></i><input id="search" type="search" placeholder="Search presets" aria-label="Search presets"></label>
+  <select id="family" aria-label="Filter effect family"><option value="">All families</option></select></div>
+  <div class="results" id="results"></div><p id="empty" hidden>No presets match your search.</p>
+</dialog>
+<dialog id="export-dialog">
+ <div class="dialog-head"><div><span class="eyebrow">COMPOSITION</span><h2>Export</h2></div><button class="plain close" aria-label="Close export"><i data-icon="x"></i></button></div>
+ <form id="export-form">
+  <label>Format<select id="export-type"><option value="png">PNG · Current frame</option><option value="video">Video · One loop</option></select></label>
+  <label>Resolution<select id="export-size"><option value="1920">1920 × 1080</option><option value="1280">1280 × 720</option><option value="3840">3840 × 2160</option></select></label>
+  <label class="check" id="alpha-row"><input type="checkbox" id="alpha">Transparent background</label>
+  <p id="export-note" role="status"></p>
+  <button type="submit" id="save" class="primary"><i data-icon="download"></i><span>Save frame</span></button>
+ </form>
+</dialog>
+<div id="toast" role="status" hidden></div>
+<script>/* BUNDLE_SCRIPT */</script>
+</body></html>
